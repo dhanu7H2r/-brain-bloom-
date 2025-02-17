@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Badges and Achievements on Brain Bloom Quiz">
+    <meta name="keywords" content="quiz, badges, achievements, learning, rewards">
+    <meta name="author" content="Quiz App Team">
+    <title>Badges and Achievements - Brain Bloom Quiz</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Add Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode header,
+        .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+
+        .dark-mode .feature-box,
+        .dark-mode .login-container,
+        .dark-mode .signup-container,
+        .dark-mode .contact-form,
+        .dark-mode .game-container,
+        .dark-mode .leaderboard,
+        .dark-mode .news-item {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        .dark-mode .answer,
+        .dark-mode input,
+        .dark-mode textarea {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+
+        .dark-mode .answer:hover {
+            background-color: #555;
+        }
+
+        .dark-mode .result-button {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .dark-mode .result-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Header */
+        header {
+            background-color: #007BFF;
+            color: white;
+            /* Reduced Padding to Decrease Height */
+            padding: 10px 20px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .home-icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-5px);
+            color: #ffcc00;
+        }
+
+        .more-options {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .more-options .icon {
+            font-size: 1.5em;
+        }
+
+        .more-options .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+        }
+
+        .dark-mode .more-options .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .more-options:hover .dropdown {
+            display: block;
+        }
+
+        .more-options .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            transition: background 0.3s ease;
+        }
+
+        .dark-mode .more-options .dropdown a {
+            color: #ffffff;
+        }
+
+        .more-options .dropdown a:hover {
+            background-color: #f4f4f4;
+        }
+
+        .dark-mode .more-options .dropdown a:hover {
+            background-color: #444;
+        }
+
+        /* Left Top Corner Dropdown */
+        .left-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .left-dropdown .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .left-dropdown:hover .icon {
+            transform: rotate(90deg);
+        }
+
+        .left-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1;
+            width: 250px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .dark-mode .left-dropdown .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .left-dropdown:hover .dropdown {
+            display: block;
+        }
+
+        .left-dropdown .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode .left-dropdown .dropdown a {
+            color: #ffffff;
+        }
+
+        .left-dropdown .dropdown a:hover {
+            background-color: #007BFF;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .dark-mode .left-dropdown .dropdown a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Unique Dropdown for Leaderboard, Results, Categories */
+        .unique-dropdown {
+            position: relative;
+            cursor: pointer;
+            margin-left: 20px;
+            /* Add spacing */
+        }
+
+        .unique-dropdown .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .unique-dropdown:hover .icon {
+            transform: rotate(90deg);
+        }
+
+        .unique-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1;
+            width: 250px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .dark-mode .unique-dropdown .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .unique-dropdown:hover .dropdown {
+            display: block;
+        }
+
+        .unique-dropdown .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode .unique-dropdown .dropdown a {
+            color: #ffffff;
+        }
+
+        .unique-dropdown .dropdown a:hover {
+            background-color: #007BFF;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .dark-mode .unique-dropdown .dropdown a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Center Brain Bloom Heading */
+        .center-heading {
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        /* Updated Styles for Brain Bloom Heading */
+        .center-heading h1 {
+            font-size: 3em;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+            animation: fadeInUp 2s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Badge-specific styles (INLINE) */
+        .badges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 960px;
+            margin: 20px auto;
+        }
+
+        .badge {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .badge h3 {
+            color: #007BFF;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .badge p {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .dark-mode .badge {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        .dark-mode .badge h3 {
+            color: #66b3ff;
+        }
+
+        /* NEW Shield Styles (INLINE) */
+        .badge-icon {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 10px;
+            /* Center horizontally */
+            border-radius: 50%;
+            /* Make it a circle */
+            /* background-color: #ffcc00;  Gold color */
+            background: linear-gradient(45deg, #f0ad4e, #eea236);
+            /* Gradient Gold */
+            color: #333;
+            /* Dark text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            /* Adjust icon size */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            /* Icon text shadow */
+        }
+
+        /* Different Badge Styles (INLINE) */
+        .badge-icon.star {
+            background: linear-gradient(45deg, #5bc0de, #46b8da);
+            color: white;
+        }
+
+        .badge-icon.medal {
+            background: linear-gradient(45deg, #d9534f, #c9302c);
+            color: white;
+        }
+
+        .badge-icon.trophy {
+            background: linear-gradient(45deg, #5cb85c, #4cae4c);
+            color: white;
+        }
+
+        .badge-icon.award {
+            background: linear-gradient(45deg, #f0ad4e, #eea236);
+            color: white;
+        }
+
+        .badge-icon.book {
+            background: linear-gradient(45deg, #673AB7, #512DA8);
+            color: white;
+        }
+
+        .badge-icon.lightbulb {
+            background: linear-gradient(45deg, #FFC107, #FF9800);
+            color: #333;
+        }
+
+        .badge-icon.flag {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+            color: white;
+        }
+
+        .badge-icon i {
+            /* Style the icon */
+            /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); */
+            /* Moved to badge-icon */
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 20px;
+        }
+
+        /* Centering "Your Achievements" */
+        main h2 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        /* Subtle Design Elements */
+        .badges-container::before,
+        .badges-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 5px;
+            background-color: #007BFF;
+            opacity: 0.3;
+        }
+
+        .badges-container::before {
+            left: 0;
+        }
+
+        .badges-container::after {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+        <!-- Left Top Corner Dropdown -->
+        <div class="left-dropdown">
+            <span class="icon">☰</span>
+            <div class="dropdown">
+                <a href="daily-streaks.html">Daily Streaks</a>
+                <a href="xp.html">Experience Points (XP)</a>
+                <a href="levels.html">Levels and Progression</a>
+                <a href="badges.html">Badges and Achievements</a>
+                <a href="leaderboard.html">Leaderboards</a>
+                <a href="power-ups.html">Power-Ups</a>
+                <a href="adaptive-learning.html">Adaptive Learning</a>
+                <a href="multiplayer.html">Multiplayer Mode</a>
+            </div>
+        </div>
+
+        <!-- Unique Dropdown for Leaderboard, Results, Categories -->
+        <div class="unique-dropdown">
+            <span class="icon">📊</span>
+            <div class="dropdown">
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="results.html">Results</a>
+                <a href="categories.html">Categories</a>
+            </div>
+        </div>
+
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading">
+            <h1>Brain Bloom</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i>Log In</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i>Sign Up</a>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+            <a href="create_quiz.html"><i class="fas fa-plus"></i>Create Quiz</a>
+            <div class="more-options">
+                <span class="icon">⋮</span>
+                <div class="dropdown">
+                    <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+                    <a href="about.html"><i class="fas fa-info-circle"></i>About</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i>Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <h2>Your Achievements</h2>
+        <section class="badges-container">
+            <div class="badge">
+                <div class="badge-icon star">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Quiz Novice</h3>
+                <p>Embarked on your quiz journey!</p>
+            </div>
+
+            <div class="badge">
+                <div class="badge-icon medal">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <h3>Quiz Explorer</h3>
+                <p>Conquered 5 quizzes across categories.</p>
+            </div>
+
+            <div class="badge">
+                <div class="badge-icon trophy">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Point Maestro</h3>
+                <p>Accumulated 100 points of pure knowledge!</p>
+            </div>
+
+            <div class="badge">
+                <div class="badge-icon award">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Achievement Ace</h3>
+                <p>Mastered three achievements with flair!</p>
+            </div>
+
+            <div class="badge">
+                <div class="badge-icon book">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Category Conqueror</h3>
+                <p>Dominated a single quiz category!</p>
+            </div>
+
+            <div class="badge">
+                <div class="badge-icon lightbulb">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Insight Inventor</h3>
+                <p>Achieved a top score in a single quiz!</p>
+            </div>
+
+            <div class="badge">
+                <div class="badge-icon flag">
+                    <i class="fas fa-flag"></i>
+                </div>
+                <h3>Quiz Completionist</h3>
+                <p>Completed all available quizzes!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Brain Bloom Quiz
+    </footer>
+
+    <!-- JavaScript (Dark Mode Toggle - If Needed) -->
+    <script>
+        // Dark Mode Toggle Functionality (Example)
+        // const body = document.querySelector('body');
+        // const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+        // if (darkModeToggle) {
+        //     darkModeToggle.addEventListener('click', () => {
+        //         body.classList.toggle('dark-mode');
+        //     });
+        // }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Categories - Brain Bloom Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode header,
+        .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+
+        .dark-mode .quiz-categories {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        /* Header */
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .center-heading {
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .center-heading h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffcc00;
+            margin: 0;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-5px);
+            color: #ffcc00;
+        }
+
+        /* Dropdowns (Combined and Improved) */
+        .dropdown-container {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-toggle:hover {
+            transform: translateY(-5px);
+            color: #ffcc00;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1;
+            width: 200px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .dark-mode .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .dropdown-container:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode .dropdown a {
+            color: #ffffff;
+        }
+
+        .dropdown a:hover {
+            background-color: #007BFF;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .dark-mode .dropdown a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Align More Options Dropdown to Right */
+        .more-options .dropdown {
+            right: 0;
+            left: auto;
+        }
+
+        /* Quiz Categories Content */
+        .quiz-categories {
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        .quiz-categories h2 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .categories button {
+            padding: 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .categories button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i>
+        </a>
+
+        <div class="dropdown-container">
+            <span class="dropdown-toggle">📊</span>
+            <div class="dropdown">
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="results.html">Results</a>
+                <a href="categories.html">Categories</a>
+            </div>
+        </div>
+
+        <div class="center-heading">
+            <h1>Brain Bloom</h1>
+        </div>
+
+        <nav class="nav-links">
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i>Log In</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i>Sign Up</a>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+            <a href="categories.html"><i class="fas fa-list"></i>Categories</a>
+            <a href="results.html"><i class="fas fa-trophy"></i>Results</a>
+            <a href="leaderboard.html"><i class="fas fa-chart-line"></i>Leaderboard</a>
+            <a href="create_quiz.html"><i class="fas fa-plus"></i>Create Quiz</a>
+            <div class="more-options">
+                <span class="icon">⋮</span>
+                <div class="dropdown">
+                    <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+                    <a href="about.html"><i class="fas fa-info-circle"></i>About</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i>Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Quiz Categories Content -->
+    <div class="quiz-categories">
+        <h2>Quiz Categories</h2>
+        <div class="categories">
+            <button onclick="navigateToCategory('science')">Science</button>
+            <button onclick="navigateToCategory('math')">Math</button>
+            <button onclick="navigateToCategory('history')">History</button>
+            <button onclick="navigateToCategory('general')">General Knowledge</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Quiz App. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button id="dark-mode-toggle" title="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        // Dark Mode Toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+            var icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        function navigateToCategory(category) {
+            alert(`Navigating to ${category} quizzes!`);
+            // Redirect to the selected category page
+        }
+    </script>
+</body>
+
+</html>

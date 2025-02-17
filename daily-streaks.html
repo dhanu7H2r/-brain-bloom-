@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your daily quiz streaks and earn rewards.">
+    <meta name="keywords" content="quiz, daily streaks, rewards, learning">
+    <meta name="author" content="Quiz App Team">
+    <title>Daily Streaks - Brain Bloom Quiz</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /*  General body styling remains the same, but updated with a darker theme */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0066ff; /* Dark background */
+            color: #ffffff; /* Light text */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Header and Footer styles remain mostly the same */
+        header {
+            background-color: #cbceff; /* Darker background for the header */
+            color: white;
+            padding: 15px 20px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(27, 14, 215, 0.5);
+        }
+
+        footer {
+            background-color: #4f19d7; /* Match header background */
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        /* Streak Container - Adjusted to match the dark theme */
+        .streaks-container {
+            padding: 20px;
+            text-align: center;
+            background-color: #252525; /* Slightly lighter than body background */
+            border-radius: 15px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(34, 93, 223, 0.7);
+            background: linear-gradient(to bottom, #252525, #1a1a1a); /* Subtle gradient */
+        }
+
+        .streaks-container h2 {
+            color: #ffffff; /* Light color for heading */
+            margin-bottom: 20px;
+        }
+
+        /* Daily Streak Reward Style - Based on the provided image */
+        .daily-streak-reward {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .day {
+            text-align: center;
+            color: #95a5a6;
+        }
+
+        .day i {
+            font-size: 2.5em; /* Adjust icon size */
+            margin-bottom: 10px;
+            color: #9b59b6; /* Example streak color (Purple) */
+            transition: color 0.3s ease; /* Smooth transition for color changes */
+        }
+
+        .day.completed i {
+            color: #e67e22; /* Orange color for completed streaks */
+        }
+
+        .day span {
+            display: block;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .claim-reward-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .claim-reward-button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Add some spacing to the existing styles */
+        .streaks-info {
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body style="font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background-color: #f3f3f3; color: #fff; transition: background-color 0.3s, color 0.3s;">
+
+    <!-- Header -->
+    <header style="background-color: #2849f0; color: white; padding: 15px 20px; position: relative; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
+        <!-- Left Top Corner Dropdown -->
+        <div class="left-dropdown" style="position: relative; cursor: pointer; display: flex; align-items: center;">
+            
+            <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+
+            <span class="icon" style="font-size: 1.5em; margin-right: 10px; transition: transform 0.3s ease;">☰</span>
+            <div class="dropdown" style="display: none; position: absolute; top: 100%; left: 0; background-color: #34495e; border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); padding: 15px; z-index: 1; width: 250px; animation: slideDown 0.3s ease-out;">
+                <a href="daily-streaks.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-calendar-alt"></i> Daily Streaks</a>
+                <a href="xp.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-star"></i> Experience Points (XP)</a>
+                <a href="levels.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-chart-line"></i> Levels and Progression</a>
+                <a href="badges.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-award"></i> Badges and Achievements</a>
+                <a href="leaderboard.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-trophy"></i> Leaderboards</a>
+                <a href="power-ups.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-bolt"></i> Power-Ups</a>
+                <a href="adaptive-learning.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-brain"></i> Adaptive Learning</a>
+                <a href="multiplayer.html" style="color: #fff; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-users"></i> Multiplayer Mode</a>
+            </div>
+        </div>
+
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading" style="text-align: center; flex-grow: 1; margin: 0 20px;">
+            <h1 style="font-size: 2.5em; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Brain Bloom Quiz</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+            <a href="#" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.1em; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s ease, color 0.3s ease;"><i class="fas fa-user"></i> Profile</a>
+            <div class="more-options" style="position: relative; cursor: pointer;">
+                <span class="icon" style="font-size: 1.5em;">...</span>
+                <div class="dropdown" style="display: none; position: absolute; top: 100%; right: 0; background-color: #34495e; border-radius: 5px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 10px; z-index: 1;">
+                    <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 8px 12px; transition: background 0.3s ease;"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 8px 12px; transition: background 0.3s ease;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="padding: 20px; text-align: center;">
+        <section class="streaks-container">
+            <h2 style="color: #fff;">Daily Quiz Streaks</h2>
+            <p class="streaks-info" style="margin-top: 20px; font-size: 1.1em;">Keep answering quizzes daily to maintain your streak and earn rewards!</p>
+
+            <!-- Daily Streak Reward Display -->
+            <div class="daily-streak-reward">
+                <div class="day completed">
+                    <i class="fas fa-check-circle"></i>
+                    Day 1
+                    <span>10 XP</span>
+                </div>
+                <div class="day completed">
+                    <i class="fas fa-check-circle"></i>
+                    Day 2
+                    <span>20 XP</span>
+                </div>
+                <div class="day">
+                    <i class="fas fa-question-circle"></i>
+                    Day 3
+                    <span>40 XP</span>
+                </div>
+                <div class="day">
+                    <i class="fas fa-question-circle"></i>
+                    Day 4
+                    <span>80 XP</span>
+                </div>
+                <div class="day">
+                    <i class="fas fa-question-circle"></i>
+                    Day 5
+                    <span>150 XP</span>
+                </div>
+            </div>
+
+            <button class="claim-reward-button">Claim Reward</button>
+
+            <p class="streaks-info" style="margin-top: 20px; font-size: 1.1em;">Current Streak: <span id="currentStreak">2</span> days</p>
+            <p class="streaks-info" style="margin-top: 20px; font-size: 1.1em;">Longest Streak: <span id="longestStreak">15</span> days</p>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: #447ae7; color: white; padding: 10px; font-size: 1em; text-align: center;">
+        &copy; 2025 Quiz App Team
+    </footer>
+
+    <script>
+        // JavaScript for interactivity can be added here
+        document.querySelector('.left-dropdown').addEventListener('mouseover', function() {
+            this.querySelector('.dropdown').style.display = 'block';
+        });
+
+        document.querySelector('.left-dropdown').addEventListener('mouseout', function() {
+            this.querySelector('.dropdown').style.display = 'none';
+        });
+
+        document.querySelector('.more-options').addEventListener('mouseover', function() {
+            this.querySelector('.dropdown').style.display = 'block';
+        });
+
+        document.querySelector('.more-options').addEventListener('mouseout', function() {
+            this.querySelector('.dropdown').style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>

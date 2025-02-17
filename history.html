@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(to bottom, #6dd5ed, #2193b0);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-item {
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-item i {
+            font-size: 1em;
+            color: #f39c12;
+        }
+
+        /* Quiz Container Styles */
+        .quiz-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 600px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .question-area {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            padding: 25px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .answer-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 25px;
+        }
+
+        .answer-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 25px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .correct {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .incorrect {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .pigeon-area {
+            text-align: center;
+            padding: 25px;
+            font-size: 3em;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .pigeon-neutral {
+            color: #bdc3c7;
+        }
+
+        .pigeon-happy {
+            color: #f1c40f;
+            animation: tada 1s;
+        }
+
+        .pigeon-sad {
+            color: #e74c3c;
+            animation: shake 0.8s;
+        }
+
+        /* Difficulty Selection Styles */
+        #difficultyFilter {
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        /* Next Question Button Styles */
+        .next-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+            
+        <div class="header-item">Score: <span id="score">0</span></div>
+        <h1>History Quiz</h1>
+        <div class="header-item">
+            <i class="far fa-clock"></i>
+            Time: <span id="timer">25</span>
+        </div>
+        <div class="header-item">Level: <span id="level">Easy</span></div>
+    </header>
+
+    <div class="quiz-container">
+        <div class="question-area">
+            <h2 id="question">Question Text</h2>
+        </div>
+
+        <div style="text-align:center; padding-bottom:15px;">
+            <label for="difficultyFilter">Select Difficulty:</label>
+            <select id="difficultyFilter" onchange="loadQuestions()">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+        </div>
+
+        <div class="answer-area">
+            <button class="answer-btn" data-answer="0">Answer 1</button>
+            <button class="answer-btn" data-answer="1">Answer 2</button>
+            <button class="answer-btn" data-answer="2">Answer 3</button>
+            <button class="answer-btn" data-answer="3">Answer 4</button>
+        </div>
+
+        <div class="pigeon-area">
+            <span id="pigeon" class="pigeon-neutral"><i class="fas fa-dove"></i></span>
+        </div>
+
+        <button class="next-btn" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 History Quiz</p>
+    </footer>
+
+    <script>
+        const questions = [
+            // Easy
+            { category: "History", level: "Easy", question: "Who was the first President of the United States?", answers: ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "John Adams"], correct: "George Washington" },
+            { category: "History", level: "Easy", question: "Which ancient civilization built the pyramids?", answers: ["Romans", "Greeks", "Egyptians", "Persians"], correct: "Egyptians" },
+            { category: "History", level: "Easy", question: "What year did World War II end?", answers: ["1943", "1945", "1950", "1939"], correct: "1945" },
+            { category: "History", level: "Easy", question: "Who discovered America in 1492?", answers: ["Marco Polo", "Christopher Columbus", "Ferdinand Magellan", "James Cook"], correct: "Christopher Columbus" },
+            { category: "History", level: "Easy", question: "Which empire was ruled by Julius Caesar?", answers: ["Greek", "Persian", "Roman", "Ottoman"], correct: "Roman" },
+
+            // Medium
+            { category: "History", level: "Medium", question: "Which country was the first to land a man on the moon?", answers: ["Soviet Union", "USA", "China", "Germany"], correct: "USA" },
+            { category: "History", level: "Medium", question: "Who was the British Prime Minister during World War II?", answers: ["Winston Churchill", "Neville Chamberlain", "Margaret Thatcher", "Tony Blair"], correct: "Winston Churchill" },
+            { category: "History", level: "Medium", question: "The Cold War was primarily between which two nations?", answers: ["USA and China", "USA and USSR", "USA and Germany", "UK and USSR"], correct: "USA and USSR" },
+            { category: "History", level: "Medium", question: "Who was the last Tsar of Russia?", answers: ["Nicholas I", "Nicholas II", "Peter the Great", "Alexander III"], correct: "Nicholas II" },
+            { category: "History", level: "Medium", question: "Which city was divided by a wall from 1961 to 1989?", answers: ["Moscow", "Berlin", "Warsaw", "Prague"], correct: "Berlin" },
+
+            // Hard
+            { category: "History", level: "Hard", question: "Which treaty ended World War I?", answers: ["Treaty of Versailles", "Treaty of Paris", "Treaty of Vienna", "Treaty of Westphalia"], correct: "Treaty of Versailles" },
+            { category: "History", level: "Hard", question: "Who was the first emperor of China?", answers: ["Kublai Khan", "Sun Yat-sen", "Qin Shi Huang", "Mao Zedong"], correct: "Qin Shi Huang" },
+            { category: "History", level: "Hard", question: "What year did the French Revolution begin?", answers: ["1776", "1789", "1804", "1812"], correct: "1789" },
+            { category: "History", level: "Hard", question: "Which ancient battle is considered Alexander the Great’s greatest victory?", answers: ["Battle of Thermopylae", "Battle of Marathon", "Battle of Gaugamela", "Battle of Actium"], correct: "Battle of Gaugamela" },
+            { category: "History", level: "Hard", question: "What was the name of the ship that brought the Pilgrims to America in 1620?", answers: ["Santa Maria", "Mayflower", "HMS Victory", "Endeavour"], correct: "Mayflower" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentDifficulty = "Easy"; // Default difficulty
+        let timeLeft = 25; // Initial time in seconds
+        let timerInterval;
+
+        const questionElement = document.getElementById('question');
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        const pigeonElement = document.getElementById('pigeon');
+        const scoreElement = document.getElementById('score');
+        const levelElement = document.getElementById('level');
+        const difficultyFilter = document.getElementById('difficultyFilter');
+        const timerElement = document.getElementById('timer');
+
+        function loadQuestions() {
+            currentDifficulty = difficultyFilter.value;
+            currentQuestionIndex = 0;
+            score = 0;
+            timeLeft = 25; // Reset timer
+            updateScore();
+            updateLevel();
+            updateTimer();
+            clearInterval(timerInterval); // Clear previous timer
+            startTimer(); // Start new timer
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const filteredQuestions = questions.filter(q => q.level === currentDifficulty);
+            if (currentQuestionIndex >= filteredQuestions.length || timeLeft <= 0) {
+                endQuiz();
+                return;
+            }
+
+            const question = filteredQuestions[currentQuestionIndex];
+            questionElement.textContent = question.question;
+
+            answerButtons.forEach((button, index) => {
+                button.textContent = question.answers[index];
+                button.dataset.answer = question.answers[index]; // Store the answer text
+                button.classList.remove('correct', 'incorrect'); // Reset button styles
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const filteredQuestions = questions.filter(q => q.level === currentDifficulty);
+            const correctAnswer = filteredQuestions[currentQuestionIndex].correct;
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                pigeonElement.className = 'pigeon-happy';
+                answerButtons.forEach(button => {
+                    if (button.dataset.answer === selectedAnswer) {
+                        button.classList.add('correct'); // Add class for correct style
+                    }
+                });
+            } else {
+                pigeonElement.className = 'pigeon-sad';
+                answerButtons.forEach(button => {
+                    if (button.dataset.answer === selectedAnswer) {
+                        button.classList.add('incorrect'); // Add class for incorrect style
+                    }
+                });
+            }
+            updateScore();
+            clearInterval(timerInterval); // Stop timer while showing results
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+            pigeonElement.className = 'pigeon-neutral';
+            startTimer();
+        }
+
+        function endQuiz() {
+            clearInterval(timerInterval); // Stop the timer
+            alert(`Quiz Over! Your score is ${score}.`);
+            currentQuestionIndex = 0;
+            loadQuestions();
+        }
+
+        function updateScore() {
+            scoreElement.textContent = score;
+        }
+
+        function updateLevel() {
+            levelElement.textContent = currentDifficulty;
+        }
+
+        function updateTimer() {
+            timerElement.textContent = timeLeft;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        answerButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const selectedAnswer = this.dataset.answer;
+                checkAnswer(selectedAnswer);
+            });
+        });
+
+    function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+            pigeonElement.className = 'pigeon-neutral';
+            startTimer();
+        }
+
+        difficultyFilter.addEventListener('change', loadQuestions);
+
+        loadQuestions();
+    </script>
+</body>
+
+</html>

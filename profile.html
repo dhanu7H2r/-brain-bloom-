@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your user profile on Brain Bloom Quiz. Edit profile, view achievements, and more.">
+    <meta name="keywords" content="user profile, profile, account, achievements">
+    <meta name="author" content="Quiz App Team">
+    <title>User Profile - Brain Bloom Quiz</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode header,
+        .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+
+        /* Header */
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .home-icon {
+            margin-right: 20px;
+        }
+
+        .home-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .home-icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .unique-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .center-heading {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .center-heading h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffcc00;
+            margin: 0;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-5px);
+            color: #ffcc00;
+        }
+
+        /* Dropdown Styles */
+        .unique-dropdown .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .unique-dropdown:hover .icon {
+            transform: rotate(90deg);
+        }
+
+        .unique-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1;
+            width: 250px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .dark-mode .unique-dropdown .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .unique-dropdown:hover .dropdown {
+            display: block;
+        }
+
+        .unique-dropdown .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode .unique-dropdown .dropdown a {
+            color: #ffffff;
+        }
+
+        .unique-dropdown .dropdown a:hover {
+            background-color: #007BFF;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .dark-mode .unique-dropdown .dropdown a:hover {
+            background-color: #0056b3;
+        }
+
+        /* More Options Dropdown */
+        .more-options {
+            position: relative;
+            cursor: pointer;
+            margin-left: 20px; /* Add some spacing to the left of the icon */
+        }
+
+        .more-options .icon {
+            font-size: 1.5em;
+            /* Adjust the size of the icon */
+            cursor: pointer;
+            /* Indicates it's clickable */
+        }
+
+        .more-options .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+            min-width: 160px;
+            /* Ensure it's wide enough */
+        }
+
+        .dark-mode .more-options .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .more-options:hover .dropdown {
+            display: block;
+        }
+
+        .more-options .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            transition: background 0.3s ease;
+        }
+
+        .dark-mode .more-options .dropdown a {
+            color: #ffffff;
+        }
+
+        .more-options .dropdown a:hover {
+            background-color: #f4f4f4;
+        }
+
+        .dark-mode .more-options .dropdown a:hover {
+            background-color: #444;
+        }
+
+        /* Profile Styles */
+        .profile {
+            max-width: 600px;
+            margin: 100px auto 20px;
+            /* Adjusted margin for better spacing */
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+            text-align: left;
+            /* added to align profile info to the left */
+        }
+
+        .dark-mode .profile {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        .profile h2 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
+            /* added to center the heading */
+        }
+
+        .profile-info {
+            text-align: left;
+            /* Ensure text inside profile-info is left-aligned */
+        }
+
+        .profile-info p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .profile button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .profile button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            font-size: 1em;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            margin-top: auto;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+    <!-- Home Icon -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+
+        <!-- Unique Dropdown for Leaderboard, Results, Categories -->
+        <div class="unique-dropdown">
+            <span class="icon">📊</span>
+            <div class="dropdown">
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="results.html">Results</a>
+                <a href="categories.html">Categories</a>
+            </div>
+        </div>
+
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading">
+            <h1>Brain Bloom</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i>Log In</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i>Sign Up</a>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+            <a href="categories.html"><i class="fas fa-list"></i>Categories</a>
+            <a href="results.html"><i class="fas fa-trophy"></i>Results</a>
+            <a href="create_quiz.html"><i class="fas fa-plus"></i>Create Quiz</a>
+            <!-- More Options Dropdown -->
+            <div class="more-options">
+                <span class="icon">⋮</span>
+                <div class="dropdown">
+                    <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+                    <a href="about.html"><i class="fas fa-info-circle"></i>About</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i>Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Profile -->
+    <div class="profile">
+        <h2>User Profile</h2>
+        <div class="profile-info">
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Quizzes Completed:</strong> 15</p>
+            <p><strong>Total Points:</strong> 1200</p>
+        </div>
+        <button onclick="editProfile()">Edit Profile</button>
+        <button onclick="viewAchievements()">View Achievements</button>
+        <button onclick="logout()">Log Out</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Brain Bloom Quiz. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button id="dark-mode-toggle" title="Toggle Dark Mode"
+        style="position:fixed;bottom:20px;right:20px;padding:10px;background-color:#007BFF;color:white;border:none;border-radius:50%;cursor:pointer;">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // Dark Mode Toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+            var icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        function editProfile() {
+            alert('Edit Profile clicked!');
+            // Redirect to edit profile page
+        }
+
+        function viewAchievements() {
+            alert('View Achievements clicked!');
+            // Redirect to achievements page
+        }
+
+        function logout() {
+            alert('Logged out!');
+            // Redirect to login page
+        }
+    </script>
+
+</body>
+
+</html>

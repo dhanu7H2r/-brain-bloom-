@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            height: 100%;
+        }
+
+        /* Header */
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-icon {
+            margin-right: 20px;
+        }
+
+        .home-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* Game Container */
+        .game-container {
+            background-color: white;
+            padding: 40px;
+            margin-top: 100px;
+            /* Adjusted to leave space for header */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .question {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .answer:hover {
+            background-color: #ddd;
+        }
+
+        .answer.correct {
+            background-color: #4CAF50;
+        }
+
+        .answer.incorrect {
+            background-color: #F44336;
+        }
+
+        .timer {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: red;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .next-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+    <!-- Home Icon -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+        >
+        <h1>Brain Bloom Quiz</h1>
+        <nav class="nav-links">
+            <a href="login.html">Log In</a>
+            <a href="signup.html">Sign Up</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <h2>Science Game</h2>
+        <div id="question-container"></div>
+        <div id="result"></div>
+        <div id="timer" class="timer">Time Left: <span id="time">30</span> seconds</div>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()" style="display:none;">Next Question</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Quiz App. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Science Questions
+        const questions = [{
+                question: "What is the chemical symbol for water?",
+                answers: ["H2O", "O2", "CO2", "H2"],
+                correct: "H2O"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                answers: ["Mars", "Earth", "Jupiter", "Venus"],
+                correct: "Mars"
+            },
+            {
+                question: "What is the speed of light?",
+                answers: ["300,000 km/s", "150,000 km/s", "500,000 km/s", "1,000,000 km/s"],
+                correct: "300,000 km/s"
+            },
+            {
+                question: "Who is known as the father of modern physics?",
+                answers: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Nikola Tesla"],
+                correct: "Albert Einstein"
+            },
+            {
+                question: "What is the most abundant gas in the Earth's atmosphere?",
+                answers: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+                correct: "Nitrogen"
+            },
+            {
+                question: "Which organ in the human body is responsible for pumping blood?",
+                answers: ["Brain", "Lungs", "Heart", "Kidneys"],
+                correct: "Heart"
+            },
+            {
+                question: "What is the primary source of energy for the Earth?",
+                answers: ["The Moon", "The Sun", "Electricity", "Volcanoes"],
+                correct: "The Sun"
+            },
+            {
+                question: "What is the largest organ in the human body?",
+                answers: ["Brain", "Lungs", "Heart", "Skin"],
+                correct: "Skin"
+            },
+            {
+                question: "What is the chemical formula for methane?",
+                answers: ["CH4", "CO2", "H2O", "C2H6"],
+                correct: "CH4"
+            },
+            {
+                question: "What is the process by which plants make their food?",
+                answers: ["Photosynthesis", "Respiration", "Transpiration", "Fertilization"],
+                correct: "Photosynthesis"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let timeLeft = 30;
+        let timerInterval;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            const questionData = questions[currentQuestionIndex];
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = `
+                <div class="question">${questionData.question}</div>
+                ${questionData.answers.map(answer => `<div class="answer" onclick="checkAnswer('${answer}')">${answer}</div>`).join('')}
+            `;
+
+            // Reset timer
+            timeLeft = 30;
+            document.getElementById('time').textContent = timeLeft;
+            startTimer();
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleTimeout() {
+            if (!answered) {
+                document.getElementById('result').innerHTML =
+                    `Time's up! The correct answer was "${questions[currentQuestionIndex].correct}".`;
+                document.querySelectorAll('.answer').forEach(answer => {
+                    if (answer.textContent === questions[currentQuestionIndex].correct) {
+                        answer.classList.add('correct');
+                    }
+                });
+                document.getElementById('next-btn').style.display = 'inline-block';
+            }
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = questions[currentQuestionIndex].correct;
+            clearInterval(timerInterval);
+            answered = true;
+
+            if (selectedAnswer === correctAnswer) {
+                document.getElementById('result').innerHTML = `Correct!`;
+                document.querySelectorAll('.answer').forEach(answer => {
+                    if (answer.textContent === selectedAnswer) {
+                        answer.classList.add('correct');
+                    }
+                });
+            } else {
+                document.getElementById('result').innerHTML =
+                    `Incorrect! The correct answer was "${correctAnswer}".`;
+                document.querySelectorAll('.answer').forEach(answer => {
+                    if (answer.textContent === correctAnswer) {
+                        answer.classList.add('correct');
+                    } else if (answer.textContent === selectedAnswer) {
+                        answer.classList.add('incorrect');
+                    }
+                });
+            }
+
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('result').innerHTML = `Game Over! You've completed the quiz!`;
+                document.getElementById('next-btn').style.display = 'none';
+            }
+        }
+
+        // Load the first question
+        loadQuestion();
+    </script>
+
+</body>
+
+</html>

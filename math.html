@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(to bottom, #6dd5ed, #2193b0);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-item {
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-item i {
+            font-size: 1em;
+            color: #f39c12;
+        }
+
+        /* Quiz Container Styles */
+        .quiz-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 600px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .question-area {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            padding: 25px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .answer-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 25px;
+        }
+
+        .answer-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 25px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .correct {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .incorrect {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .pigeon-area {
+            text-align: center;
+            padding: 25px;
+            font-size: 3em;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .pigeon-neutral {
+            color: #bdc3c7;
+        }
+
+        .pigeon-happy {
+            color: #f1c40f;
+            animation: tada 1s;
+        }
+
+        .pigeon-sad {
+            color: #e74c3c;
+            animation: shake 0.8s;
+        }
+
+        /* Difficulty Selection Styles */
+        #difficultyFilter {
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        /* Next Question Button Styles */
+        .next-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+            
+        <div class="header-item">Score: <span id="score">0</span></div>
+        <h1>Maths Quiz</h1>
+        <div class="header-item">
+            <i class="far fa-clock"></i>
+            Time: <span id="timer">25</span>
+        </div>
+        <div class="header-item">Level: <span id="level">Easy</span></div>
+    </header>
+
+    <div class="quiz-container">
+        <div class="question-area">
+            <h2 id="question">Question Text</h2>
+        </div>
+
+        <div style="text-align:center; padding-bottom:15px;">
+            <label for="difficultyFilter">Select Difficulty:</label>
+            <select id="difficultyFilter" onchange="loadQuestions()">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+        </div>
+
+        <div class="answer-area">
+            <button class="answer-btn" data-answer="0">Answer 1</button>
+            <button class="answer-btn" data-answer="1">Answer 2</button>
+            <button class="answer-btn" data-answer="2">Answer 3</button>
+            <button class="answer-btn" data-answer="3">Answer 4</button>
+        </div>
+
+        <div class="pigeon-area">
+            <span id="pigeon" class="pigeon-neutral"><i class="fas fa-dove"></i></span>
+        </div>
+
+        <button class="next-btn" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Maths Quiz</p>
+    </footer>
+
+    <script>
+        const questions = [
+            // Easy
+            { category: "Maths", level: "Easy", question: "What is 5 + 3?", answers: ["6", "7", "8", "9"], correct: "8" },
+            { category: "Maths", level: "Easy", question: "What is 10 - 4?", answers: ["5", "6", "7", "8"], correct: "6" },
+            { category: "Maths", level: "Easy", question: "What is 3 × 4?", answers: ["9", "10", "12", "15"], correct: "12" },
+            { category: "Maths", level: "Easy", question: "What is 20 ÷ 5?", answers: ["2", "4", "5", "6"], correct: "4" },
+            { category: "Maths", level: "Easy", question: "What is the square root of 16?", answers: ["2", "3", "4", "5"], correct: "4" },
+
+            // Medium
+            { category: "Maths", level: "Medium", question: "What is 15 × 3?", answers: ["30", "35", "40", "45"], correct: "45" },
+            { category: "Maths", level: "Medium", question: "What is 144 ÷ 12?", answers: ["10", "11", "12", "13"], correct: "12" },
+            { category: "Maths", level: "Medium", question: "If a triangle has angles of 50° and 60°, what is the third angle?", answers: ["70°", "80°", "90°", "100°"], correct: "70°" },
+            { category: "Maths", level: "Medium", question: "What is the value of π (pi) to two decimal places?", answers: ["3.12", "3.14", "3.16", "3.18"], correct: "3.14" },
+            { category: "Maths", level: "Medium", question: "Solve for x: 2x + 5 = 15", answers: ["3", "5", "7", "10"], correct: "5" },
+
+            // Hard
+            { category: "Maths", level: "Hard", question: "What is the derivative of x²?", answers: ["x", "2x", "x²", "x³"], correct: "2x" },
+            { category: "Maths", level: "Hard", question: "What is the integral of 3x²?", answers: ["x³", "x²", "x³ + C", "3x³"], correct: "x³ + C" },
+            { category: "Maths", level: "Hard", question: "What is the sum of the interior angles of a hexagon?", answers: ["360°", "540°", "720°", "900°"], correct: "720°" },
+            { category: "Maths", level: "Hard", question: "If f(x) = 2x + 3, what is f⁻¹(x)?", answers: ["(x-3)/2", "2x + 3", "x/2 + 3", "x-2"], correct: "(x-3)/2" },
+            { category: "Maths", level: "Hard", question: "What is the limit of (1 + 1/n)ⁿ as n approaches infinity?", answers: ["1", "e", "∞", "0"], correct: "e" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentDifficulty = "Easy"; // Default difficulty
+        let timeLeft = 25; // Initial time in seconds
+        let timerInterval;
+
+        const questionElement = document.getElementById('question');
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        const pigeonElement = document.getElementById('pigeon');
+        const scoreElement = document.getElementById('score');
+        const levelElement = document.getElementById('level');
+        const difficultyFilter = document.getElementById('difficultyFilter');
+        const timerElement = document.getElementById('timer');
+
+        function loadQuestions() {
+            currentDifficulty = difficultyFilter.value;
+            currentQuestionIndex = 0;
+            score = 0;
+            timeLeft = 25; // Reset timer
+            updateScore();
+            updateLevel();
+            updateTimer();
+            clearInterval(timerInterval); // Clear previous timer
+            startTimer(); // Start new timer
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const filteredQuestions = questions.filter(q => q.level === currentDifficulty);
+            if (currentQuestionIndex >= filteredQuestions.length || timeLeft <= 0) {
+                endQuiz();
+                return;
+            }
+
+            const question = filteredQuestions[currentQuestionIndex];
+            questionElement.textContent = question.question;
+
+            answerButtons.forEach((button, index) => {
+                button.textContent = question.answers[index];
+                button.dataset.answer = question.answers[index]; // Store the answer text
+                button.classList.remove('correct', 'incorrect'); // Reset button styles
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const filteredQuestions = questions.filter(q => q.level === currentDifficulty);
+            const correctAnswer = filteredQuestions[currentQuestionIndex].correct;
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                pigeonElement.className = 'pigeon-happy';
+                answerButtons.forEach(button => {
+                    if (button.dataset.answer === selectedAnswer) {
+                        button.classList.add('correct'); // Add class for correct style
+                    }
+                });
+            } else {
+                pigeonElement.className = 'pigeon-sad';
+                answerButtons.forEach(button => {
+                    if (button.dataset.answer === selectedAnswer) {
+                        button.classList.add('incorrect'); // Add class for incorrect style
+                    }
+                });
+            }
+            updateScore();
+            clearInterval(timerInterval); // Stop timer while showing results
+        }
+    function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+            pigeonElement.className = 'pigeon-neutral';
+            startTimer();
+        }
+
+        function endQuiz() {
+            clearInterval(timerInterval); // Stop the timer
+            alert(`Quiz Over! Your score is ${score}.`);
+            currentQuestionIndex = 0;
+            loadQuestions();
+        }
+
+        function updateScore() {
+            scoreElement.textContent = score;
+        }
+
+        function updateLevel() {
+            levelElement.textContent = currentDifficulty;
+        }
+
+        function updateTimer() {
+            timerElement.textContent = timeLeft;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        answerButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const selectedAnswer = this.dataset.answer;
+                checkAnswer(selectedAnswer);
+            });
+        });
+    function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+            pigeonElement.className = 'pigeon-neutral';
+            startTimer();
+        }
+        difficultyFilter.addEventListener('change', loadQuestions);
+
+        loadQuestions();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join or create multiplayer quiz games with friends.">
+    <meta name="keywords" content="quiz, multiplayer, games, learning">
+    <meta name="author" content="Quiz App Team">
+    <title>Multiplayer Mode - Brain Bloom Quiz</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Add Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; transition: background-color 0.3s, color 0.3s;">
+
+    <!-- Header -->
+    <header style="background-color: #007BFF; color: white; padding: 15px 20px; position: relative; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <!-- Left Top Corner Dropdown -->
+        <div class="left-dropdown" style="position: relative; cursor: pointer; display: flex; align-items: center;">
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+            
+            <span class="icon" style="font-size: 1.5em; margin-right: 10px;">☰</span>
+            <div class="dropdown" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); padding: 15px; z-index: 1; width: 250px;">
+                <a href="daily-streaks.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Daily Streaks</a>
+                <a href="xp.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Experience Points (XP)</a>
+                <a href="levels.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Levels and Progression</a>
+                <a href="badges.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Badges and Achievements</a>
+                <a href="leaderboard.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Leaderboards</a>
+                <a href="power-ups.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Power-Ups</a>
+                <a href="adaptive-learning.html" style="color: #333; text-decoration: none; display: block; padding: 10px;">Adaptive Learning</a>
+                <a href="#" style="color: #333; text-decoration: none; display:block;padding :10px;">Multiplayer Mode</a>
+            </div>
+        </div>
+
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading" style="text-align:center;margin-left:auto;margin-right:auto;">
+            <h1 style="font-size :2.5em;font-weight :900;color:white;text-shadow :2px 2px 4px rgba(0,0,0,0.5);">Brain Bloom Quiz</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links" style="display:flex ;align-items:center ;gap :20px;">
+            <a href="#" style="color:white;text-decoration:none;font-weight:bold;font-size :1.1em ;display:inline-flex ;align-items:center ;gap :8px;"><i class="fas fa-user"></i> Profile</a>
+            <div class="more-options" style ="position :relative ;cursor:pointer;">
+                <span class ="icon" style ="font-size :1.5em;">...</span>
+                <div class ="dropdown" style ="display:none ;position:absolute ;top :100%;right :0;background-color:white;border-radius :5px ;box-shadow :0 4px 12px rgba(0,0,0,0.1);padding :10px;">
+                    <a href="#" style ="color:#333;text-decoration:none ;display:block;padding :8px;">Settings</a>
+                    <a href="#" style ="color:#333;text-decoration:none ;display:block;padding :8px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style ="padding :20px;text-align:center;">
+        <section class ="multiplayer-container">
+            <h2 style ="color:#007BFF;">Multiplayer Mode</h2>
+            <p style ="font-size :1.1em;color:#555;margin-bottom :20px;">Join a game and compete with other players!</p>
+
+            <!-- Game List -->
+            <div class ="game-list" style ="margin-top :20px;">
+                <!-- Game Item -->
+                <div class ="game-item" style ="background-color:white;border-radius :10px;padding :15px;margin :10px auto;width :80%;max-width :600px ;box-shadow :0px 2px 4px rgba(0,0,0,0.1);display:flex ;justify-content :space-between ;align-items:center;">
+                    <span style ="font-size :1.1em;color:#333;">Game A - Science Quiz</span>
+                    <button onclick ="joinGame('Science Quiz')" style ="background-color:#28A745;color:white;border:none;padding :8px;border-radius :5px ;cursor:pointer;">Join</button>
+                </div>
+
+                <!-- Game Item -->
+                <div class ="game-item" style ="background-color:white;border-radius :10px;padding :15px;margin :10px auto;width :80%;max-width :600px ;box-shadow :0px 2px 4px rgba(0,0,0,0.1);display:flex ;justify-content :space-between ;align-items:center;">
+                    <span style ="font-size :1.1em;color:#333;">Game B - History Trivia</span>
+                    <button onclick ="joinGame('History Trivia')" style ="background-color:#28A745;color:white;border:none;padding :8px;border-radius :5px ;cursor:pointer;">Join</button>
+                </div>
+
+                <!-- Game Item -->
+                <div class ="game-item" style ="background-color:white;border-radius :10px;padding :15px;margin :10px auto;width :80%;max-width :600px ;box-shadow :0px 2px 4px rgba(0,0,0,0.1);display:flex ;justify-content :space-between ;align-items:center;">
+                    <span style ="font-size :1.1em;color:#333;">Game C - General Knowledge</span>
+                    <button onclick ="joinGame('General Knowledge')" style ="background-color:#28A745;color:white;border:none;padding :8px;border-radius :5px ;cursor:pointer;">Join</button>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style ="background-color:#007BFF;color:white;padding :10px;font-size :1em;text-align:center;">
+        &copy;2025 Quiz App Team
+    </footer>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        // Show dropdown on hover
+        document.querySelector('.left-dropdown').addEventListener('mouseover', function() {
+            this.querySelector('.dropdown').style.display = 'block';
+        });
+
+        document.querySelector('.left-dropdown').addEventListener('mouseout', function() {
+            this.querySelector('.dropdown').style.display = 'none';
+        });
+
+        document.querySelector('.more-options').addEventListener('mouseover', function() {
+            this.querySelector('.dropdown').style.display = 'block';
+        });
+
+        document.querySelector('.more-options').addEventListener('mouseout', function() {
+            this.querySelector('.dropdown').style.display = 'none';
+        });
+
+        // Function to join a game
+        function joinGame(gameName) {
+            alert('Joining game: ' + gameName);
+            // Add logic here to handle joining the game
+        }
+    </script>
+
+</body>
+</html>

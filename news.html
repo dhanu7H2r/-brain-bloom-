@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Updates - Brain Bloom Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-icon {
+            margin-right: 20px;
+        }
+
+        .home-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .center-heading {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .center-heading h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffcc00;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+            /* Add transition for hover effect */
+        }
+
+        .nav-links a:hover {
+            color: #ffcc00;
+            /* Change color on hover */
+        }
+
+        /* More Options Dropdown */
+        .more-options {
+            position: relative;
+            cursor: pointer;
+            margin-left: 20px;
+            /* Add spacing to the left of the icon */
+        }
+
+        .more-options .icon {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .more-options .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+            min-width: 160px;
+            text-align: left;
+            /* Align dropdown items to the left */
+        }
+
+        .more-options:hover .dropdown {
+            display: block;
+        }
+
+        .more-options .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            transition: background 0.3s ease;
+        }
+
+        .more-options .dropdown a:hover {
+            background-color: #f4f4f4;
+        }
+
+        /* Unique Dropdown */
+        .unique-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .unique-dropdown .dropdown-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .unique-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            z-index: 1;
+            text-align: left;
+            border-radius: 5px;
+            left: 0;
+        }
+
+        .unique-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .unique-dropdown .dropdown-content a {
+            color: black;
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .unique-dropdown .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Updates Section Styles */
+        .updates {
+            max-width: 800px;
+            margin: 80px auto 30px;
+            /* Adjusted top margin */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .update-item {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .update-item h3 {
+            color: #007BFF;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: auto;
+            /* Push footer to bottom */
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            width: 100%;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode .updates {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .update-item {
+            border-bottom: 1px solid #444;
+        }
+
+        body.dark-mode .update-item h3 {
+            color: #007BFF;
+        }
+
+        /* Dark Mode Toggle Button */
+        #dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+            
+        <div class="unique-dropdown">
+            <span class="dropdown-icon">&#9776;</span>
+            <div class="dropdown-content">
+                <a href="daily-streaks.html">Daily Streaks</a>
+                <a href="xp.html">Experience Points (XP)</a>
+                <a href="levels.html">Levels and Progression</a>
+                <a href="badges.html">Badges and Achievements</a>
+                <a href="leaderboard.html">Leaderboards</a>
+                <a href="power-ups.html">Power-Ups</a>
+                <a href="adaptive-learning.html">Adaptive Learning</a>
+                <a href="multiplayer.html">Multiplayer Mode</a>
+            </div>
+        </div>
+        <a href="index.html" class="home-icon">
+            <img src="https://t3.ftcdn.net/jpg/05/34/01/08/360_F_534010883_FyQP2MPvhKkk9o86HeH6XPsBof2EbcHE.jpg"
+                alt="Home">
+        </a>
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading">
+            <h1>Brain Bloom Quiz</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i>Log In</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i>Sign Up</a>
+            <!-- More Options Dropdown -->
+            <div class="more-options">
+                <span class="icon">⋮</span>
+                <div class="dropdown">
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Updates Section -->
+    <section class="updates">
+        <div class="update-item">
+            <h3>🎉 Leaderboard Added! (Feb 2025)</h3>
+            <p>Compete with others and see who ranks the highest.</p>
+        </div>
+        <div class="update-item">
+            <h3>📢 New Quiz Categories (Jan 2025)</h3>
+            <p>We added Science, Math, and History quizzes for more fun learning!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Brain Bloom Quiz. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button id="dark-mode-toggle" title="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        const toggleButton = document.getElementById('dark-mode-toggle');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+
+</body>
+
+</html>

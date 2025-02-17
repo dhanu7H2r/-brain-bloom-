@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Bloom Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #506eae; /* Light background, like Duolingo */
+            color: #333;
+        }
+
+        header {
+            background-color: #0090fe; /* Green, Duolingo-like */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card i {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #4CAF50; /* Green icon color */
+        }
+
+        .category-card a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Difficulty Filter */
+        #difficultyFilter {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+
+        
+        <h1>Brain Bloom Quiz</h1>
+    </header>
+
+    <main>
+        <label for="difficultyFilter">Select Difficulty:</label>
+        <select id="difficultyFilter">
+            <option value="all">All Difficulties</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <div class="category-grid">
+            <div class="category-card">
+                <i class="fas fa-futbol"></i>
+                <a href="sports.html">Sports</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-globe"></i>
+                <a href="gk.html">General Knowledge</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-calculator"></i>
+                <a href="math.html">Math</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-landmark"></i>
+                <a href="history.html">History</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-brain"></i>
+                <a href="philosophy.html">Philosophy</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-music"></i>
+                <a href="music.html">Music</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

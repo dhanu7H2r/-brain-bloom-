@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the leveling system and track your progression.">
+    <meta name="keywords" content="quiz, levels, progression, learning">
+    <meta name="author" content="Quiz App Team">
+    <title>Levels and Progression - Brain Bloom Quiz</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Add Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; transition: background-color 0.3s, color 0.3s;">
+
+    <!-- Header -->
+    <header style="background-color: #007BFF; color: white; padding: 15px 20px; position: relative; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <!-- Left Top Corner Dropdown -->
+        <div class="left-dropdown" style="position: relative; cursor: pointer; display: flex; align-items: center;">
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon">
+            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+            <span class="icon" style="font-size: 1.5em; margin-right: 10px; transition: transform 0.3s ease;">☰</span>
+            <div class="dropdown" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); padding: 15px; z-index: 1; width: 250px; animation: slideDown 0.3s ease-out;">
+                <a href="daily-streaks.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-calendar-alt"></i> Daily Streaks</a>
+                <a href="xp.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-star"></i> Experience Points (XP)</a>
+                <a href="levels.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-chart-line"></i> Levels and Progression</a>
+                <a href="badges.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-award"></i> Badges and Achievements</a>
+                <a href="leaderboard.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-trophy"></i> Leaderboards</a>
+                <a href="power-ups.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-bolt"></i> Power-Ups</a>
+                <a href="adaptive-learning.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-brain"></i> Adaptive Learning</a>
+                <a href="multiplayer.html" style="color: #333; text-decoration: none; display: block; padding: 10px 15px; margin: 5px 0; border-radius: 5px; transition: background 0.3s ease, transform 0.3s ease;"><i class="fas fa-users"></i> Multiplayer Mode</a>
+            </div>
+        </div>
+
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading" style="text-align: center; flex-grow: 1; margin: 0 20px;">
+            <h1 style="font-size: 2.5em; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Brain Bloom Quiz</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+            <a href="profile.html" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.1em; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s ease, color 0.3s ease;"><i class="fas fa-user"></i> Profile</a>
+            <div class="more-options" style="position: relative; cursor: pointer;">
+                <span class="icon" style="font-size: 1.5em;">...</span>
+                <div class="dropdown" style="display: none; position: absolute; top: 100%; right: 0; background-color: white; border-radius: 5px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 10px; z-index: 1;">
+                    <a href="#" style="color: #333; text-decoration: none; display: block; padding: 8px 12px; transition: background 0.3s ease;"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" style="color: #333; text-decoration: none; display: block; padding: 8px 12px; transition: background 0.3s ease;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="padding: 20px; text-align: center;">
+        <section class="levels-container">
+            <h2 style="color: #007BFF;">Levels and Progression</h2>
+            <div class="level-progress" style="width: 80%; margin: 20px auto; background-color: #f0f0f0; border-radius: 10px; overflow: hidden;">
+                <div class="level-bar" style="background-color: #FFC107; height: 20px; width: 30%; border-radius: 10px; transition: width 0.5s ease;"></div>
+            </div>
+            <p class="level-info" style="margin-top: 20px; font-size: 1.1em;">Current Level: <span id="currentLevel">7</span></p>
+            <p class="level-info" style="margin-top: 20px; font-size: 1.1em;">Progress to Next Level: <span id="xpToNextLevel">300</span> / <span id="totalXpNeeded">1000</span> XP</p>
+
+            <table class="level-table" style="width: 80%; margin: 30px auto; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px 12px; text-align: left; background-color: #f0f0f0;">Level</th>
+                        <th style="border: 1px solid #ddd; padding: 8px 12px; text-align: left; background-color: #f0f0f0;">XP Required</th>
+                        <th style="border: 1px solid #ddd; padding: 8px 12px; text-align: left; background-color: #f0f0f0;">Rewards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">1</td>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">0</td>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">Basic Badge</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">5</td>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">5000</td>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">New Power-Up</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">10000</td>
+                        <td style="border: 1px solid #ddd; padding: 8px 12px; text-align: left;">Exclusive Content Access</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: #007BFF; color: white; padding: 10px; font-size: 1em; text-align: center;">
+        &copy; 2025 Quiz App Team
+    </footer>
+
+    <script>
+        // JavaScript for interactivity can be added here
+        document.querySelector('.left-dropdown').addEventListener('mouseover', function() {
+            this.querySelector('.dropdown').style.display = 'block';
+        });
+
+        document.querySelector('.left-dropdown').addEventListener('mouseout', function() {
+            this.querySelector('.dropdown').style.display = 'none';
+        });
+
+        document.querySelector('.more-options').addEventListener('mouseover', function() {
+            this.querySelector('.dropdown').style.display = 'block';
+        });
+
+        document.querySelector('.more-options').addEventListener('mouseout', function() {
+            this.querySelector('.dropdown').style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>

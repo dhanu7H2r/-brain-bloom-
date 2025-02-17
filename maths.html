@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #444;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            height: 100%;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .home-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .home-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .nav-links {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+            font-size: 1.1em;
+        }
+
+        .game-container {
+            background-color: white;
+            padding: 40px;
+            margin-top: 100px; /* Adjusted to leave space for header */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .question {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .answer:hover {
+            background-color: #ddd;
+        }
+
+        .answer.correct {
+            background-color: #4CAF50;
+        }
+
+        .answer.incorrect {
+            background-color: #F44336;
+        }
+
+        .timer {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: red;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .next-btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+    <!-- Home Icon -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
+        
+        <h1>Brain Bloom Quiz</h1>
+        <nav class="nav-links">
+            <a href="login.html">Log In</a>
+            <a href="signup.html">Sign Up</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <h2>Maths Game</h2>
+        <div id="question-container"></div>
+        <div id="result"></div>
+        <div id="timer" class="timer">Time Left: <span id="time">30</span> seconds</div>
+        <br>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()" style="display:none;">Next Question</button>
+    </br>
+    </div>
+    <div class="score-board">
+        <h4>Score</h4>
+        <div id="score" class="score">0</div>
+    </div>
+
+
+    <!-- Footer -->
+    <br>
+    <footer>
+        <p>&copy; 2025 Quiz App. All Rights Reserved.</p>
+    </footer>
+    </br>
+
+    <script>
+        // Questions for the quiz
+        const questions = [
+            { question: "What is 2 + 2?", answers: ["4", "5", "6", "3"], correct: "4" },
+            { question: "What is 9 - 3?", answers: ["7", "5", "6", "3"], correct: "6" },
+            { question: "What is 5 * 5?", answers: ["25", "20", "15", "10"], correct: "25" },
+            { question: "What is 12 ÷ 4?", answers: ["2", "4", "3", "6"], correct: "3" },
+            { question: "What is 6 + 7?", answers: ["12", "14", "13", "15"], correct: "13" },
+            { question: "What is 15 - 7?", answers: ["5", "7", "8", "9"], correct: "8" },
+            { question: "What is 8 * 3?", answers: ["24", "18", "20", "16"], correct: "24" },
+            { question: "What is 36 ÷ 6?", answers: ["5", "6", "4", "3"], correct: "6" },
+            { question: "What is 9 + 5?", answers: ["13", "12", "15", "14"], correct: "14" },
+            { question: "What is 10 * 3?", answers: ["30", "32", "28", "25"], correct: "30" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let timeLeft = 30;
+        let timerInterval;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            const questionData = questions[currentQuestionIndex];
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = `
+                <div class="question">${questionData.question}</div>
+                ${questionData.answers.map(answer => `<div class="answer" onclick="checkAnswer('${answer}')">${answer}</div>`).join('')}
+            `;
+
+            // Reset timer
+            timeLeft = 30;
+            document.getElementById('time').textContent = timeLeft;
+            startTimer();
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleTimeout() {
+            if (!answered) {
+                document.getElementById('result').innerHTML = `Time's up! The correct answer was "${questions[currentQuestionIndex].correct}".`;
+                document.querySelectorAll('.answer').forEach(answer => {
+                    if (answer.textContent === questions[currentQuestionIndex].correct) {
+                        answer.classList.add('correct');
+                    }
+                });
+                document.getElementById('next-btn').style.display = 'inline-block';
+            }
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = questions[currentQuestionIndex].correct;
+            clearInterval(timerInterval);
+            answered = true;
+
+            if (selectedAnswer === correctAnswer) {
+                document.getElementById('result').innerHTML = `Correct!`;
+                document.querySelectorAll('.answer').forEach(answer => {
+                    if (answer.textContent === selectedAnswer) {
+                        answer.classList.add('correct');
+                    }
+                });
+            } else {
+                document.getElementById('result').innerHTML = `Incorrect! The correct answer was "${correctAnswer}".`;
+                document.querySelectorAll('.answer').forEach(answer => {
+                    if (answer.textContent === correctAnswer) {
+                        answer.classList.add('correct');
+                    } else if (answer.textContent === selectedAnswer) {
+                        answer.classList.add('incorrect');
+                    }
+                });
+            }
+
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('result').innerHTML = `Game Over! You've completed the quiz!`;
+                document.getElementById('next-btn').style.display = 'none';
+            }
+        }
+
+        // Load the first question
+        loadQuestion();
+    </script>
+
+</body>
+</html>

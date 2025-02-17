@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test your knowledge with fun and interactive quizzes across various subjects.">
+    <meta name="keywords" content="quiz, learning, knowledge, interactive, subjects">
+    <meta name="author" content="Quiz App Team">
+    <title>Brain Bloom Quiz</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Add Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode header, .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+
+        .dark-mode .feature-box, .dark-mode .login-container, .dark-mode .signup-container, .dark-mode .contact-form, .dark-mode .game-container, .dark-mode .leaderboard, .dark-mode .news-item {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        .dark-mode .answer, .dark-mode input, .dark-mode textarea {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+
+        .dark-mode .answer:hover {
+            background-color: #555;
+        }
+
+        .dark-mode .result-button {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .dark-mode .result-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Header */
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .home-icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-5px);
+            color: #ffcc00;
+        }
+
+        .more-options {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .more-options .icon {
+            font-size: 1.5em;
+        }
+
+        .more-options .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+        }
+
+        .dark-mode .more-options .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .more-options:hover .dropdown {
+            display: block;
+        }
+
+        .more-options .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            transition: background 0.3s ease;
+        }
+
+        .dark-mode .more-options .dropdown a {
+            color: #ffffff;
+        }
+
+        .more-options .dropdown a:hover {
+            background-color: #f4f4f4;
+        }
+
+        .dark-mode .more-options .dropdown a:hover {
+            background-color: #444;
+        }
+
+        /* Left Top Corner Dropdown */
+        .left-dropdown {
+            position: relative;
+            cursor: pointer;
+            display: flex; /* Use flexbox */
+            align-items: center; /* Vertically center the icon and dropdown */
+        }
+
+        .left-dropdown .home-icon {
+            font-size: 1.5em; /* Adjust the size as needed */
+            margin-right: 5px; /* Adjust spacing between the home icon and menu icon */
+        }
+
+        .left-dropdown .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .left-dropdown:hover .icon {
+            transform: rotate(90deg);
+        }
+
+        .left-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1;
+            width: 250px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .dark-mode .left-dropdown .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .left-dropdown:hover .dropdown {
+            display: block;
+        }
+
+        .left-dropdown .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode .left-dropdown .dropdown a {
+            color: #ffffff;
+        }
+
+        .left-dropdown .dropdown a:hover {
+            background-color: #007BFF;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .dark-mode .left-dropdown .dropdown a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Unique Dropdown for Leaderboard, Results, Categories */
+        .unique-dropdown {
+            position: relative;
+            cursor: pointer;
+            margin-left: 20px; /* Add spacing */
+        }
+
+        .unique-dropdown .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .unique-dropdown:hover .icon {
+            transform: rotate(90deg);
+        }
+
+        .unique-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1;
+            width: 250px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .dark-mode .unique-dropdown .dropdown {
+            background-color: #2d2d2d;
+        }
+
+        .unique-dropdown:hover .dropdown {
+            display: block;
+        }
+
+        .unique-dropdown .dropdown a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode .unique-dropdown .dropdown a {
+            color: #ffffff;
+        }
+
+        .unique-dropdown .dropdown a:hover {
+            background-color: #007BFF;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .dark-mode .unique-dropdown .dropdown a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Center Brain Bloom Heading */
+        .center-heading {
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .center-heading h1 {
+            font-size: 2.5em;
+            font-weight: 900; /* Make it bolder */
+            color: white; /* Change to white */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            animation: fadeInDown 1s ease;
+            position: relative; /* For positioning the gaming icons */
+            overflow: hidden; /* Prevent icons from overflowing the section */
+        }
+
+        .hero h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+            /* Gradient Text */
+            background: linear-gradient(to right, #ffcc00, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; /* Required for gradient to work correctly */
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+            /* Gradient Text */
+            background: linear-gradient(to right, #ffcc00, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; /* Required for gradient to work correctly */
+        }
+
+        .start-btn, .trial-btn, .subject-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.4em;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            margin: 10px;
+        }
+
+        .start-btn {
+            background-color: #ffcc00;
+            color: #333;
+        }
+
+        .start-btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.05);
+        }
+
+        .trial-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .trial-btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .subject-btn {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .subject-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 60px 20px;
+        }
+
+        .feature-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 1s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-box h3 {
+            color: #007BFF;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            /* Gradient Text */
+            background: linear-gradient(to right, #007BFF, #0056b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; /* Required for gradient to work correctly */
+        }
+
+        .feature-box p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .feature-box a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .feature-box a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+            animation: fadeInUp 2s ease;
+        }
+
+        /* Gaming Icons Styling */
+        .gaming-icons {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+        }
+
+        .gaming-icons i {
+            font-size: 2em;
+            transition: transform 0.3s ease;
+        }
+
+        .gaming-icons i:hover {
+            transform: scale(1.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <!-- Left Top Corner Dropdown -->
+        <div class="left-dropdown">
+            <span class="icon">☰</span>
+            <div class="dropdown">
+                <a href="daily-streaks.html"><i class="fas fa-calendar-alt"></i> Daily Streaks</a>
+                <a href="xp.html"><i class="fas fa-star"></i> Experience Points (XP)</a>
+                <a href="levels.html"><i class="fas fa-chart-line"></i> Levels and Progression</a>
+                <a href="badges.html"><i class="fas fa-award"></i> Badges and Achievements</a>
+                <a href="leaderboard.html"><i class="fas fa-trophy"></i> Leaderboards</a>
+                <a href="power-ups.html"><i class="fas fa-bolt"></i> Power-Ups</a>
+                <a href="adaptive-learning.html"><i class="fas fa-brain"></i> Adaptive Learning</a>
+                <a href="multiplayer.html"><i class="fas fa-users"></i> Multiplayer Mode</a>
+            </div>
+        </div>
+
+        <!-- Unique Dropdown for Leaderboard, Results, Categories -->
+        <div class="unique-dropdown">
+            <span class="icon">📊</span>
+            <div class="dropdown">
+                <a href="leaderboard.html"><i class="fas fa-list-ol"></i> Leaderboard</a>
+                <a href="results.html"><i class="fas fa-poll"></i> Results</a>
+                <a href="categories.html"><i class="fas fa-th-list"></i> Categories</a>
+            </div>
+        </div>
+
+        <!-- Center Brain Bloom Heading -->
+        <div class="center-heading">
+            <h1>Brain Bloom</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Log In</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+            <a href="create_quiz.html"><i class="fas fa-plus"></i> Create Quiz</a>
+            <div class="more-options">
+                <span class="icon">⋮</span>
+                <div class="dropdown">
+                    <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main id="main-content">
+        <section class="hero">
+            <h2>Test Your Knowledge with Fun Quizzes!</h2>
+            <p>Join now and challenge yourself with exciting questions in various subjects.</p>
+            <br>
+            <a href="get_started.html" class="start-btn"><i class="fas fa-rocket"></i> Get Started</a>
+            <a href="trial_game.html" class="trial-btn"><i class="fas fa-gamepad"></i> Try the Game</a>
+
+            <!-- Gaming Icons in Free Space -->
+            <div class="gaming-icons">
+                <i class="fas fa-gamepad"></i>
+                <i class="fas fa-dice"></i>
+                <i class="fas fa-headset"></i>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-box">
+                <h3>Interactive Quizzes</h3>
+                <p>Engaging questions to help you learn and grow.</p>
+                <a href="get_started.html">start quiz</a>
+            </div>
+            <div class="feature-box">
+                <h3>Multiple Subjects</h3>
+                <p>Choose from a wide range of subjects to test your knowledge.</p>
+                <a href="categories.html">Explore subjects</a>
+            </div>
+            <div class="feature-box">
+                <h3>Track Your Progress</h3>
+                <p>Monitor your performance and see how you improve over time.</p>
+                <a href="profile.html">View your profile</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Brain Bloom Quiz App
+    </footer>
+</body>
+</html>
