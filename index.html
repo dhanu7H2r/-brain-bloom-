@@ -161,13 +161,13 @@
         .left-dropdown {
             position: relative;
             cursor: pointer;
-            display: flex; /* Use flexbox */
-            align-items: center; /* Vertically center the icon and dropdown */
+            display: flex;
+            align-items: center;
         }
 
         .left-dropdown .home-icon {
-            font-size: 1.5em; /* Adjust the size as needed */
-            margin-right: 5px; /* Adjust spacing between the home icon and menu icon */
+            font-size: 1.5em;
+            margin-right: 5px;
         }
 
         .left-dropdown .icon {
@@ -230,7 +230,7 @@
         .unique-dropdown {
             position: relative;
             cursor: pointer;
-            margin-left: 20px; /* Add spacing */
+            margin-left: 20px;
         }
 
         .unique-dropdown .icon {
@@ -298,8 +298,8 @@
 
         .center-heading h1 {
             font-size: 2.5em;
-            font-weight: 900; /* Make it bolder */
-            color: white; /* Change to white */
+            font-weight: 900;
+            color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
@@ -310,30 +310,28 @@
             padding: 100px 20px;
             text-align: center;
             animation: fadeInDown 1s ease;
-            position: relative; /* For positioning the gaming icons */
-            overflow: hidden; /* Prevent icons from overflowing the section */
+            position: relative;
+            overflow: hidden;
         }
 
         .hero h2 {
             font-size: 3em;
             margin-bottom: 20px;
             animation: bounce 2s infinite;
-            /* Gradient Text */
             background: linear-gradient(to right, #ffcc00, #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block; /* Required for gradient to work correctly */
+            display: inline-block;
         }
 
         .hero p {
             font-size: 1.2em;
             margin-bottom: 30px;
             animation: fadeInUp 1s ease;
-            /* Gradient Text */
             background: linear-gradient(to right, #ffcc00, #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block; /* Required for gradient to work correctly */
+            display: inline-block;
         }
 
         .start-btn, .trial-btn, .subject-btn {
@@ -404,11 +402,10 @@
             color: #007BFF;
             font-size: 1.6em;
             margin-bottom: 20px;
-            /* Gradient Text */
             background: linear-gradient(to right, #007BFF, #0056b3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block; /* Required for gradient to work correctly */
+            display: inline-block;
         }
 
         .feature-box p {
@@ -449,7 +446,7 @@
             right: 20px;
             display: flex;
             gap: 15px;
-            color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .gaming-icons i {
@@ -513,6 +510,127 @@
             100% {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .nav-links {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+            }
+
+            .nav-links a {
+                margin: 0 10px;
+                font-size: 1em;
+            }
+
+            .hero h2 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .start-btn, .trial-btn, .subject-btn {
+                padding: 10px 20px;
+                font-size: 1.2em;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 30px 10px;
+            }
+
+            .feature-box {
+                padding: 20px;
+            }
+
+            .feature-box h3 {
+                font-size: 1.4em;
+            }
+
+            .feature-box p {
+                font-size: 1em;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .category-card i {
+                font-size: 2em;
+            }
+
+            .category-card a {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (min-width: 769px) {
+            header {
+                justify-content: space-between;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                position: static;
+                transform: none;
+            }
+
+            .hero {
+                padding: 120px 20px;
+            }
+
+            .hero h2 {
+                font-size: 3.5em;
+            }
+
+            .hero p {
+                font-size: 1.5em;
+            }
+
+            .start-btn, .trial-btn, .subject-btn {
+                padding: 15px 30px;
+                font-size: 1.4em;
+            }
+
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 40px;
+                padding: 80px 20px;
+            }
+
+            .feature-box {
+                padding: 30px;
+            }
+
+            .feature-box h3 {
+                font-size: 1.8em;
+            }
+
+            .feature-box p {
+                font-size: 1.2em;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .category-card i {
+                font-size: 3em;
+            }
+
+            .category-card a {
+                font-size: 1.1em;
             }
         }
     </style>
@@ -609,5 +727,29 @@
     <footer>
         &copy; 2025 Brain Bloom Quiz App
     </footer>
+
+    <!-- Inline JavaScript for Dark Mode Toggle -->
+    <script>
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+
+            // Save the user's preference in localStorage
+            if (body.classList.contains("dark-mode")) {
+                localStorage.setItem("darkMode", "enabled");
+            } else {
+                localStorage.setItem("darkMode", "disabled");
+            }
+        }
+
+        // Check for dark mode preference on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const darkMode = localStorage.getItem("darkMode");
+            if (darkMode === "enabled") {
+                document.body.classList.add("dark-mode");
+            }
+        });
+    </script>
 </body>
 </html>
