@@ -6,304 +6,597 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard - Brain Bloom Quiz</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #ffbe0b;
+            --danger: #ef233c;
+            --text-light: #f8f9fa;
+            --text-dark: #212529;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #2d2d2d;
+            --item-bg-light: #f9f9f9;
+            --item-bg-dark: #3a3a3a;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
         /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--light);
+            color: var(--text-dark);
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        .dark-mode header,
-        .dark-mode footer {
-            background-color: #1f1f1f;
+            background-color: var(--dark);
+            color: var(--text-light);
         }
 
         /* Header */
         header {
-            background-color: #007BFF;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 15px 20px;
+            padding: 15px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffcc00, #ffbe0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
             position: relative;
         }
 
-        .home-icon {
-            position: relative;
-            order: 1;
-            margin-right: 20px;
-            /* Add some spacing */
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        .home-icon img {
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dropdowns */
+        .dropdown-container {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .dropdown-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--card-bg-light);
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 10px 0;
+            z-index: 100;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+
+        .dark-mode .dropdown-menu {
+            background-color: var(--card-bg-dark);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-container:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .dropdown-item {
+            color: var(--text-light);
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding-left: 25px;
+        }
+
+        .dark-mode .dropdown-item:hover {
+            background-color: rgba(67, 97, 238, 0.2);
+        }
+
+        /* Leaderboard Section */
+        .leaderboard-container {
+            flex: 1;
+            padding: 2rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .leaderboard-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .leaderboard-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .leaderboard-description {
+            color: var(--text-dark);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .dark-mode .leaderboard-description {
+            color: var(--text-light);
+        }
+
+        /* Leaderboard Tabs */
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .dark-mode .leaderboard-tabs {
+            border-bottom-color: #444;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .dark-mode .tab-btn {
+            color: var(--text-light);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Leaderboard Content */
+        .leaderboard-content {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-bg-light);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .dark-mode .leaderboard-content {
+            background-color: var(--card-bg-dark);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .dark-mode .leaderboard-item {
+            border-bottom-color: #444;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-item:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .leaderboard-item:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .rank {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            width: 40px;
+            text-align: center;
+        }
+
+        .rank-1 {
+            color: gold;
+            font-size: 1.5rem;
+        }
+
+        .rank-2 {
+            color: silver;
+            font-size: 1.4rem;
+        }
+
+        .rank-3 {
+            color: #cd7f32; /* bronze */
+            font-size: 1.3rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 15px;
+        }
+
+        .avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            border: 2px solid var(--primary);
         }
 
-        .home-icon img:hover {
-            transform: scale(1.1);
+        .username {
+            font-weight: 600;
+            flex: 1;
         }
 
-        .unique-dropdown {
-            position: relative;
-            cursor: pointer;
-            order: 2;
+        .score {
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 20px;
         }
 
-        .center-heading {
-            text-align: center;
-            flex-grow: 1;
-            order: 3;
+        .badge-icon {
+            color: var(--accent);
+            font-size: 1.2rem;
         }
 
-        .center-heading h1 {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #ffcc00;
-            margin: 0;
-        }
-
-        /* Navigation Links */
-        .nav-links {
+        /* Action Buttons */
+        .action-buttons {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            order: 4;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: transform 0.3s ease, color 0.3s ease;
         }
 
-        .nav-links a:hover {
-            transform: translateY(-5px);
-            color: #ffcc00;
-        }
-
-        /* Dropdown Styles */
-        .unique-dropdown .icon {
-            font-size: 1.5em;
-            margin-right: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .unique-dropdown:hover .icon {
-            transform: rotate(90deg);
-        }
-
-        .unique-dropdown .dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            z-index: 1;
-            width: 250px;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .dark-mode .unique-dropdown .dropdown {
-            background-color: #2d2d2d;
-        }
-
-        .unique-dropdown:hover .dropdown {
-            display: block;
-        }
-
-        .unique-dropdown .dropdown a {
-            color: #333;
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-            margin: 5px 0;
-            border-radius: 5px;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .dark-mode .unique-dropdown .dropdown a {
-            color: #ffffff;
-        }
-
-        .unique-dropdown .dropdown a:hover {
-            background-color: #007BFF;
+        .btn-primary {
+            background-color: var(--primary);
             color: white;
-            transform: translateX(10px);
         }
 
-        .dark-mode .unique-dropdown .dropdown a:hover {
-            background-color: #0056b3;
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
         }
 
-        /* More Options Dropdown */
-        .more-options {
-            position: relative;
-            cursor: pointer;
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
-        .more-options .icon {
-            font-size: 1.5em;
+        .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            transform: translateY(-3px);
         }
 
-        .more-options .dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            z-index: 1;
+        .dark-mode .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.2);
         }
 
-        .dark-mode .more-options .dropdown {
-            background-color: #2d2d2d;
-        }
-
-        .more-options:hover .dropdown {
-            display: block;
-        }
-
-        .more-options .dropdown a {
-            color: #333;
-            text-decoration: none;
-            display: block;
-            padding: 8px 12px;
-            transition: background 0.3s ease;
-        }
-
-        .dark-mode .more-options .dropdown a {
-            color: #ffffff;
-        }
-
-        .more-options .dropdown a:hover {
-            background-color: #f4f4f4;
-        }
-
-        .dark-mode .more-options .dropdown a:hover {
-            background-color: #444;
-        }
-
-        /* Leaderboard Content Styles */
-        .leaderboard {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease;
-        }
-
-        /* Dark Mode Leaderboard Styles */
-        .dark-mode .leaderboard {
-            background-color: #2d2d2d;
-            color: #ffffff;
-        }
-
-        /* Leaderboard Heading Styles */
-        h2 {
-            color: #007BFF;
-            margin-bottom: 20px;
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 5%;
             text-align: center;
+            margin-top: auto;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        li {
-            padding: 10px;
-            margin: 5px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
-        li:hover {
-            background-color: #e0e0e0;
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
         }
 
-        li.dark-mode {
-            background-color: #444;
-            color: #fff;
+        .social-link:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
         }
 
-        li.dark-mode:hover {
-            background-color: #555;
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px;
-            background-color: #007BFF;
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 1em;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            z-index: 100;
         }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        /* Footer Styles */
-        footer {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px;
-            font-size: 1em;
-            text-align: center;
+        .dark-mode-toggle:hover {
+            transform: scale(1.1) rotate(30deg);
+            background-color: var(--accent);
         }
 
         /* Animations */
         @keyframes fadeIn {
             from {
-                opacity: 0
+                opacity: 0;
+                transform: translateY(10px);
             }
-
             to {
-                opacity: 1
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
             }
 
-            to {
-                opacity: 1
+            .nav-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .leaderboard-title {
+                font-size: 2rem;
+            }
+
+            .leaderboard-item {
+                padding: 12px 15px;
+            }
+
+            .user-info {
+                gap: 10px;
+            }
+
+            .avatar {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .leaderboard-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -312,98 +605,280 @@
 <body>
     <!-- Header -->
     <header>
-        <!-- Home Icon -->
-        <a href="index.html" class="home-icon">
-            <i class="fas fa-home home-icon" style="font-size: 1.5em; margin-right: 5px;"></i> </a>
-
-        <!-- Unique Dropdown for Leaderboard, Results, Categories -->
-        <div class="unique-dropdown">
-            <span class="icon">📊</span>
-            <div class="dropdown">
-                <a href="leaderboard.html">Leaderboard</a>
-                <a href="results.html">Results</a>
-                <a href="categories.html">Categories</a>
-            </div>
+        <div class="logo-container">
+            <i class="fas fa-brain logo-icon"></i>
+            <span class="logo-text">Brain Bloom</span>
         </div>
 
-        <!-- Center Brain Bloom Heading -->
-        <div class="center-heading">
-            <h1>Brain Bloom</h1>
-        </div>
+        <div class="nav-container">
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="categories.html" class="nav-link"><i class="fas fa-list"></i> Categories</a>
+                <a href="leaderboard.html" class="nav-link active"><i class="fas fa-trophy"></i> Leaderboard</a>
+                <a href="create_quiz.html" class="nav-link"><i class="fas fa-plus"></i> Create Quiz</a>
+            </nav>
 
-        <!-- Navigation Links -->
-        <nav class="nav-links">
-            <a href="login.html"><i class="fas fa-sign-in-alt"></i>Log In</a>
-            <a href="signup.html"><i class="fas fa-user-plus"></i>Sign Up</a>
-            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
-            <a href="categories.html"><i class="fas fa-list"></i>Categories</a>
-            <a href="results.html"><i class="fas fa-trophy"></i>Results</a>
-            <a href="create_quiz.html"><i class="fas fa-plus"></i>Create Quiz</a>
-            <div class="more-options">
-                <span class="icon">⋮</span>
-                <div class="dropdown">
-                    <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
-                    <a href="about.html"><i class="fas fa-info-circle"></i>About</a>
-                    <a href="contact.html"><i class="fas fa-envelope"></i>Contact</a>
+            <div class="dropdown-container">
+                <button class="dropdown-btn">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="logout.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <!-- Leaderboard Content -->
-    <div class="leaderboard">
-        <h2>Leaderboard</h2>
-        <ul id="leaderboard-list">
-            <li>1. John Doe - 1000 points</li>
-            <li>2. Jane Smith - 950 points</li>
-            <li>3. Alex Johnson - 900 points</li>
-        </ul>
+    <!-- Leaderboard Section -->
+    <main class="leaderboard-container">
+        <div class="leaderboard-header">
+            <h1 class="leaderboard-title">Leaderboard</h1>
+            <p class="leaderboard-description">Compete with others and climb to the top of the rankings!</p>
+        </div>
 
-        <!-- Leaderboard Buttons -->
-        <button onclick="showGlobalLeaderboard()">Global Leaderboard</button>
-        <button onclick="showFriendsLeaderboard()">Friends Leaderboard</button>
-        <button onclick="refreshLeaderboard()">Refresh</button>
-    </div>
+        <div class="leaderboard-tabs">
+            <button class="tab-btn active" onclick="showGlobalLeaderboard()">Global</button>
+            <button class="tab-btn" onclick="showFriendsLeaderboard()">Friends</button>
+            <button class="tab-btn" onclick="showWeeklyLeaderboard()">Weekly</button>
+            <button class="tab-btn" onclick="showMonthlyLeaderboard()">Monthly</button>
+        </div>
+
+        <div class="leaderboard-content">
+            <ul class="leaderboard-list" id="leaderboard-list">
+                <!-- Top 1 -->
+                <li class="leaderboard-item">
+                    <span class="rank rank-1">1</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="avatar">
+                        <span class="username">QuizMaster2000</span>
+                        <i class="fas fa-crown badge-icon" title="Top Player"></i>
+                    </div>
+                    <span class="score">12,450 pts</span>
+                </li>
+                
+                <!-- Top 2 -->
+                <li class="leaderboard-item">
+                    <span class="rank rank-2">2</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="avatar">
+                        <span class="username">TriviaQueen</span>
+                        <i class="fas fa-medal badge-icon" title="Silver Medal"></i>
+                    </div>
+                    <span class="score">11,890 pts</span>
+                </li>
+                
+                <!-- Top 3 -->
+                <li class="leaderboard-item">
+                    <span class="rank rank-3">3</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="User" class="avatar">
+                        <span class="username">BrainyBoi</span>
+                        <i class="fas fa-medal badge-icon" title="Bronze Medal"></i>
+                    </div>
+                    <span class="score">10,760 pts</span>
+                </li>
+                
+                <!-- Other ranks -->
+                <li class="leaderboard-item">
+                    <span class="rank">4</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="User" class="avatar">
+                        <span class="username">KnowledgeNinja</span>
+                    </div>
+                    <span class="score">9,840 pts</span>
+                </li>
+                
+                <li class="leaderboard-item">
+                    <span class="rank">5</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="User" class="avatar">
+                        <span class="username">FactFinder</span>
+                    </div>
+                    <span class="score">9,120 pts</span>
+                </li>
+                
+                <li class="leaderboard-item">
+                    <span class="rank">6</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="User" class="avatar">
+                        <span class="username">CuriousCat</span>
+                    </div>
+                    <span class="score">8,750 pts</span>
+                </li>
+                
+                <li class="leaderboard-item">
+                    <span class="rank">7</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="User" class="avatar">
+                        <span class="username">WiseOwl</span>
+                    </div>
+                    <span class="score">8,430 pts</span>
+                </li>
+                
+                <li class="leaderboard-item">
+                    <span class="rank">8</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/women/19.jpg" alt="User" class="avatar">
+                        <span class="username">SmartyPants</span>
+                    </div>
+                    <span class="score">7,980 pts</span>
+                </li>
+                
+                <li class="leaderboard-item">
+                    <span class="rank">9</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="User" class="avatar">
+                        <span class="username">TheProfessor</span>
+                    </div>
+                    <span class="score">7,650 pts</span>
+                </li>
+                
+                <li class="leaderboard-item">
+                    <span class="rank">10</span>
+                    <div class="user-info">
+                        <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="User" class="avatar">
+                        <span class="username">QuizWhiz</span>
+                    </div>
+                    <span class="score">7,320 pts</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="refreshLeaderboard()">
+                <i class="fas fa-sync-alt"></i> Refresh Leaderboard
+            </button>
+            <button class="btn btn-outline" onclick="shareLeaderboard()">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+        </div>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Quiz App. All Rights Reserved.</p>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+            </div>
+            <p class="copyright">&copy; 2025 Brain Bloom Quiz. All rights reserved.</p>
+        </div>
     </footer>
 
     <!-- Dark Mode Toggle -->
-    <button id="dark-mode-toggle" title="Toggle Dark Mode">
+    <button class="dark-mode-toggle" id="dark-mode-toggle">
         <i class="fas fa-moon"></i>
     </button>
 
     <!-- JavaScript -->
     <script>
         // Dark Mode Toggle
-        document.getElementById('dark-mode-toggle').addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
-            var icon = this.querySelector('i');
-            if (document.body.classList.contains('dark-mode')) {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved user preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
                 icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('darkMode', 'enabled');
             } else {
                 icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
             }
         });
 
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        
+        function setActiveTab(clickedTab) {
+            tabButtons.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            clickedTab.classList.add('active');
+        }
+
+        // Leaderboard functions
         function showGlobalLeaderboard() {
-            alert('Showing global leaderboard...');
+            setActiveTab(event.currentTarget);
             // Fetch and display global leaderboard data
+            console.log('Showing global leaderboard...');
         }
 
         function showFriendsLeaderboard() {
-            alert('Showing friends leaderboard...');
+            setActiveTab(event.currentTarget);
             // Fetch and display friends leaderboard data
+            console.log('Showing friends leaderboard...');
+        }
+
+        function showWeeklyLeaderboard() {
+            setActiveTab(event.currentTarget);
+            // Fetch and display weekly leaderboard data
+            console.log('Showing weekly leaderboard...');
+        }
+
+        function showMonthlyLeaderboard() {
+            setActiveTab(event.currentTarget);
+            // Fetch and display monthly leaderboard data
+            console.log('Showing monthly leaderboard...');
         }
 
         function refreshLeaderboard() {
-            alert('Refreshing leaderboard...');
-            // Refresh leaderboard data
+            // Add loading animation
+            const refreshBtn = event.currentTarget;
+            const icon = refreshBtn.querySelector('i');
+            
+            refreshBtn.disabled = true;
+            icon.classList.add('fa-spin');
+            
+            // Simulate API call
+            setTimeout(() => {
+                refreshBtn.disabled = false;
+                icon.classList.remove('fa-spin');
+                
+                // In a real app, you would update the leaderboard data here
+                console.log('Leaderboard refreshed!');
+                
+                // Show success feedback
+                const originalText = refreshBtn.innerHTML;
+                refreshBtn.innerHTML = '<i class="fas fa-check"></i> Updated!';
+                
+                setTimeout(() => {
+                    refreshBtn.innerHTML = originalText;
+                }, 2000);
+            }, 1500);
         }
-    </script>
 
+        function shareLeaderboard() {
+            // In a real app, this would use the Web Share API or social media links
+            console.log('Sharing leaderboard...');
+            alert('Leaderboard shared! (This would open share dialog in a real app)');
+        }
+
+        // Add animation to top 3 players
+        document.addEventListener('DOMContentLoaded', () => {
+            const topPlayers = document.querySelectorAll('.rank-1, .rank-2, .rank-3');
+            
+            topPlayers.forEach((player, index) => {
+                // Delay animations slightly for each player
+                setTimeout(() => {
+                    player.style.animation = 'pulse 2s infinite';
+                }, index * 300);
+            });
+        });
+    </script>
 </body>
 
 </html>
